@@ -7,6 +7,11 @@ const nextConfig = {
       bodySizeLimit: '50mb',
     },
   },
+  api: {
+    bodyParser: {
+      sizeLimit: '50mb',
+    },
+  },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],

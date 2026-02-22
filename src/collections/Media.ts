@@ -11,6 +11,12 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+
+    {
+      name: 'externalUrl',
+      type: 'text',
+      label: 'Supabase Image URL',
+    },
   ],
   upload: true,
 }

@@ -7,7 +7,10 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
 
-  upload: true,
+  upload: {
+    staticDir: 'media',
+    mimeTypes: ['image/*', 'video/*'],
+  },
 
   fields: [
     {

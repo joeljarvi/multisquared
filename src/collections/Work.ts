@@ -4,9 +4,9 @@ export const Work: CollectionConfig = {
   slug: 'work',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'client', 'year', 'category'],
+    defaultColumns: ['title', 'client', 'year', 'category', 'order'],
   },
-  timestamps: true,
+  timestamps: true, // adds createdAt / updatedAt
   fields: [
     {
       name: 'slug',
@@ -15,6 +15,12 @@ export const Work: CollectionConfig = {
       unique: true,
       index: true,
       admin: { position: 'sidebar' },
+    },
+
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
     },
 
     {
@@ -31,16 +37,7 @@ export const Work: CollectionConfig = {
 
     {
       name: 'category',
-      type: 'select',
-      options: [
-        { label: 'Photo', value: 'photo' },
-        { label: 'Video', value: 'video' },
-        { label: 'Art Direction', value: 'art-direction' },
-        { label: 'Production', value: 'production' },
-        { label: 'Concept', value: 'concept' },
-      ],
-      required: true,
-      admin: { width: '50%' },
+      type: 'text',
     },
 
     {
@@ -50,18 +47,24 @@ export const Work: CollectionConfig = {
     },
 
     {
-      name: 'media',
+      name: 'order',
+      type: 'number',
+      admin: {
+        position: 'sidebar',
+        description: 'Lower = earlier in list',
+      },
+    },
+
+    {
+      name: 'images',
       type: 'array',
       label: 'Gallery',
       fields: [
         {
-          name: 'file',
+          name: 'image',
           type: 'upload',
           relationTo: 'media',
           required: true,
-          admin: {
-            description: 'Supports images and videos',
-          },
         },
         {
           name: 'alt',

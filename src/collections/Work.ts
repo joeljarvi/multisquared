@@ -6,35 +6,8 @@ export const Work: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'client', 'year', 'category'],
   },
-  timestamps: true, // adds createdAt / updatedAt
+  timestamps: true,
   fields: [
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      index: true,
-      admin: {
-        position: 'sidebar',
-        description: 'Leave blank to auto-generate from title',
-      },
-      hooks: {
-        beforeChange: [
-          ({ data, originalDoc }) => {
-            if (!data) return {}
-
-            if (!data.slug && data.title) {
-              data.slug = data.title
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, '-')
-                .replace(/(^-|-$)/g, '')
-            }
-            return data
-          },
-        ],
-      },
-    },
-
     {
       name: 'title',
       type: 'text',

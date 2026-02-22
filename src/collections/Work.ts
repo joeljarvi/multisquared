@@ -9,9 +9,12 @@ export const Work: CollectionConfig = {
   timestamps: true,
   fields: [
     {
-      name: 'title',
+      name: 'slug',
       type: 'text',
       required: true,
+      unique: true,
+      index: true,
+      admin: { position: 'sidebar' },
     },
 
     {

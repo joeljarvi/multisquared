@@ -4,7 +4,7 @@ export const Work: CollectionConfig = {
   slug: 'work',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'client', 'year', 'category', 'order'],
+    defaultColumns: ['title', 'client', 'year', 'category'],
   },
   timestamps: true, // adds createdAt / updatedAt
   fields: [
@@ -14,7 +14,25 @@ export const Work: CollectionConfig = {
       required: true,
       unique: true,
       index: true,
-      admin: { position: 'sidebar' },
+      admin: {
+        position: 'sidebar',
+        description: 'Leave blank to auto-generate from title',
+      },
+      hooks: {
+        beforeChange: [
+          ({ data, originalDoc }) => {
+            if (!data) return {}
+
+            if (!data.slug && data.title) {
+              data.slug = data.title
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)/g, '')
+            }
+            return data
+          },
+        ],
+      },
     },
 
     {
@@ -37,7 +55,16 @@ export const Work: CollectionConfig = {
 
     {
       name: 'category',
-      type: 'text',
+      type: 'select',
+      options: [
+        { label: 'Photo', value: 'photo' },
+        { label: 'Video', value: 'video' },
+        { label: 'Art Direction', value: 'art-direction' },
+        { label: 'Production', value: 'production' },
+        { label: 'Concept', value: 'concept' },
+      ],
+      required: true,
+      admin: { width: '50%' },
     },
 
     {
@@ -47,24 +74,18 @@ export const Work: CollectionConfig = {
     },
 
     {
-      name: 'order',
-      type: 'number',
-      admin: {
-        position: 'sidebar',
-        description: 'Lower = earlier in list',
-      },
-    },
-
-    {
-      name: 'images',
+      name: 'media',
       type: 'array',
       label: 'Gallery',
       fields: [
         {
-          name: 'image',
+          name: 'file',
           type: 'upload',
           relationTo: 'media',
           required: true,
+          admin: {
+            description: 'Supports images and videos',
+          },
         },
         {
           name: 'alt',
